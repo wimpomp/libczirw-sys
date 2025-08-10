@@ -1,0 +1,22 @@
+[package]
+name = "libczirw-sys"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.85.1"
+authors = ["Wim Pomp <w.pomp@nki.nl>"]
+license = "MIT"
+description = "Wrapper around libCZIAPI"
+homepage = "https://github.com/wimpomp/libczirw-sys"
+repository = "https://github.com/wimpomp/libczirw-sys"
+readme = "README.md"
+keywords = ["czi", "zeiss", "libczi"]
+categories = ["multimedia::images", "science"]
+
+[dependencies]
+anyhow = "1.0.98"
+
+[build-dependencies]
+anyhow = "1.0.98"
+bindgen = "0.72.0"
+cmake = "0.1.54"
+git2 = "0.20.2"
