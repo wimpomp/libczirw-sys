@@ -11,6 +11,7 @@ repository = "https://github.com/wimpomp/libczirw-sys"
 readme = "README.md"
 keywords = ["czi", "zeiss", "libczi"]
 categories = ["multimedia::images", "science"]
+links = "libCZIAPI"
 
 [dependencies]
 anyhow = "1.0.98"
