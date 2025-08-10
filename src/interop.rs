@@ -555,6 +555,14 @@ impl BitmapLockInfo {
             )
         }
     }
+
+    pub fn get_stride(&self) -> u32 {
+        self.0.stride
+    }
+
+    pub fn get_size(&self) -> u64 {
+        self.0.size
+    }
 }
 
 impl SubBlockInfo {
