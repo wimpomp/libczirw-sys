@@ -1,4 +1,4 @@
-use anyhow::{Error, Result};
+use anyhow::Result;
 use std::env;
 use std::fs::OpenOptions;
 use std::io::{Read, Seek, Write};
@@ -30,10 +30,10 @@ fn main() -> Result<()> {
             .define("LIBCZI_BUILD_LIBCZIAPI", "ON")
             .build();
 
-        let libczi_src = libczi_dir.join("Src/libCZI");
-        let libcziapi_inc = libczi_dir.join("Src/libCZIAPI/inc");
-        let libcziapi_src = libczi_dir.join("Src/libCZIAPI/src");
-        let libczi_h = libcziapi_inc.join("libCZIApi.h");
+        // let libcziapi_inc = libczi_dir.join("Src/libCZIAPI/inc");
+        // let libczi_src = libczi_dir.join("Src/libCZI");
+        // let libcziapi_src = libczi_dir.join("Src/libCZIAPI/src");
+        // let libczi_h = libcziapi_inc.join("libCZIApi.h");
 
         let import_export = libczi_dir.join("Src/libCZIAPI/inc/importexport.h");
         {
@@ -53,32 +53,32 @@ fn main() -> Result<()> {
                 .expect("Could not truncate");
         };
 
-        let bindings = bindgen::Builder::default()
-            .clang_args([
-                "-x",
-                "c++",
-                "-std=c++14",
-                "-I",
-                libcziapi_inc
-                    .to_str()
-                    .ok_or(Error::msg("cannot into string"))?,
-                "-I",
-                libcziapi_src
-                    .to_str()
-                    .ok_or(Error::msg("cannot into string"))?,
-                "-I",
-                libczi_src
-                    .to_str()
-                    .ok_or(Error::msg("cannot into string"))?,
-            ])
-            .header(libczi_h.to_str().ok_or(Error::msg("cannot into string"))?)
-            .generate()
-            .expect("Unable to generate bindings");
+        // let bindings = bindgen::Builder::default()
+        //     .clang_args([
+        //         "-x",
+        //         "c++",
+        //         "-std=c++14",
+        //         "-I",
+        //         libcziapi_inc
+        //             .to_str()
+        //             .ok_or(Error::msg("cannot into string"))?,
+        //         "-I",
+        //         libcziapi_src
+        //             .to_str()
+        //             .ok_or(Error::msg("cannot into string"))?,
+        //         "-I",
+        //         libczi_src
+        //             .to_str()
+        //             .ok_or(Error::msg("cannot into string"))?,
+        //     ])
+        //     .header(libczi_h.to_str().ok_or(Error::msg("cannot into string"))?)
+        //     .generate()
+        //     .expect("Unable to generate bindings");
+        //
+        // bindings
+        //     .write_to_file(out_dir.join("lib_czi_api.rs"))
+        //     .expect("Couldn't write bindings!");
 
-        bindings
-            .write_to_file(out_dir.join("lib_czi_api.rs"))
-            .expect("Couldn't write bindings!");
-        
         println!(
             "cargo:rustc-link-search=native={}",
             dst.join("build/Src/libCZIAPI").display()

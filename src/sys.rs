@@ -5,5 +5,6 @@
 #![allow(dead_code)]
 #![allow(rustdoc::broken_intra_doc_links)]
 #![allow(rustdoc::invalid_html_tags)]
+#![allow(clippy::missing_safety_doc)]
 
-include!(concat!(env!("OUT_DIR"), "/lib_czi_api.rs"));
+include!("lib_czi_api.rs");
