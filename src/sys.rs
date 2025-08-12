@@ -7,4 +7,8 @@
 #![allow(rustdoc::invalid_html_tags)]
 #![allow(clippy::missing_safety_doc)]
 
+#[cfg(docsrs)]
 include!("lib_czi_api.rs");
+
+#[cfg(not(docsrs))]
+include!(concat!(env!("OUT_DIR"), "/lib_czi_api.rs"));

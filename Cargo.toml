@@ -1,6 +1,6 @@
 [package]
 name = "libczirw-sys"
-version = "0.1.2"
+version = "0.2.0"
 edition = "2024"
 rust-version = "1.85.1"
 authors = ["Wim Pomp <w.pomp@nki.nl>"]
@@ -15,8 +15,13 @@ links = "libCZIAPI"
 
 [dependencies]
 anyhow = "1.0.98"
+link-cplusplus = "1.0"
 
 [build-dependencies]
 anyhow = "1.0.98"
+bindgen = "0.72.0"
 cmake = "0.1.54"
-git2 = "0.20.2"
+regex = "1.11.1"
+
+[features]
+dynamic = []

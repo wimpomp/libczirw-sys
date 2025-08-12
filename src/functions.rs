@@ -137,7 +137,7 @@ impl CziReader {
     ///    available.
     ///  - In the returned 'SubBlockStatisticsInteropEx' structure, the 'number_of_per_scenes_bounding_boxes' field will be set to the number of per-scene
     ///    information that is put into this struct (which may be less than number of scenes that are available).
-    /// 
+    ///
     ///  So, the caller is expected to check the returned 'number_of_per_channel_bounding_boxes' to see how many per-channel bounding boxes are available.
     ///  If this number is greater than the number of elements (given with the 'number_of_per_scenes_bounding_boxes' value in the 'statistics' structure),
     ///  then the caller should allocate a larger 'statistics' structure and call this function again (with an increased 'number_of_per_scenes_bounding_boxes').
@@ -640,7 +640,13 @@ impl LockedBitmap {
     /// \\param \[out\]    ptr           Pointer to the memory location where the bitmap is to be copied to.
     ///
     /// \\returns A LibCZIApiErrorCode.
-    pub fn copy(&self, width: u32, height: u32, pixel_type: PixelType, stride: u32) -> Result<Bitmap> {
+    pub fn copy(
+        &self,
+        width: u32,
+        height: u32,
+        pixel_type: PixelType,
+        stride: u32,
+    ) -> Result<Bitmap> {
         let mut data = MaybeUninit::<Self>::uninit();
         LibCZIApiError::try_from(unsafe {
             libCZI_BitmapCopyTo(

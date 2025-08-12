@@ -3,60 +3,61 @@ use crate::sys::*;
 use std::mem::MaybeUninit;
 use std::ops::Deref;
 
-
 /// CZI-reader object.
 #[derive(Clone, Debug)]
-pub struct CziReader(pub (crate) CziReaderObjectHandle);
+pub struct CziReader(pub(crate) CziReaderObjectHandle);
 
 /// sub-block object.
 #[derive(Clone, Debug)]
-pub struct SubBlock(pub (crate) SubBlockObjectHandle);
+pub struct SubBlock(pub(crate) SubBlockObjectHandle);
 
 /// input stream object.
 #[derive(Clone, Debug)]
-pub struct InputStream(pub (crate) InputStreamObjectHandle);
+pub struct InputStream(pub(crate) InputStreamObjectHandle);
 
 /// output stream object.
 #[derive(Clone, Debug)]
-pub struct OutputStream(pub (crate) OutputStreamObjectHandle);
+pub struct OutputStream(pub(crate) OutputStreamObjectHandle);
 
 /// memory allocation object - which is a pointer to a memory block, which must be
 /// freed with 'libCZI_Free'.
 /// TODO(JBL): this is not really used so far, should be removed I guess.
 #[derive(Clone, Debug)]
-pub struct MemoryAllocation(pub (crate) MemoryAllocationObjectHandle);
+pub struct MemoryAllocation(pub(crate) MemoryAllocationObjectHandle);
 
 /// bitmap object.
 #[derive(Clone, Debug)]
-pub struct Bitmap(pub (crate) BitmapObjectHandle);
+pub struct Bitmap(pub(crate) BitmapObjectHandle);
 
 /// metadata segment object.
 #[derive(Clone, Debug)]
-pub struct MetadataSegment(pub (crate) MetadataSegmentObjectHandle);
+pub struct MetadataSegment(pub(crate) MetadataSegmentObjectHandle);
 
 /// attachment object.
 #[derive(Clone, Debug)]
-pub struct Attachment(pub (crate) AttachmentObjectHandle);
+pub struct Attachment(pub(crate) AttachmentObjectHandle);
 
 /// writer object.
 #[derive(Clone, Debug)]
-pub struct CziWriter(pub (crate) CziWriterObjectHandle);
+pub struct CziWriter(pub(crate) CziWriterObjectHandle);
 
 /// single-channel-scaling-tile-accessor.
 #[derive(Clone, Debug)]
-pub struct SingleChannelScalingTileAccessor(pub (crate) SingleChannelScalingTileAccessorObjectHandle);
+pub struct SingleChannelScalingTileAccessor(
+    pub(crate) SingleChannelScalingTileAccessorObjectHandle,
+);
 
 /// document info object.
 #[derive(Clone, Debug)]
-pub struct CziDocumentInfo(pub (crate) CziDocumentInfoHandle);
+pub struct CziDocumentInfo(pub(crate) CziDocumentInfoHandle);
 
 /// display settings object.
 #[derive(Clone, Debug)]
-pub struct DisplaySettings(pub (crate) DisplaySettingsHandle);
+pub struct DisplaySettings(pub(crate) DisplaySettingsHandle);
 
 /// channel display settings object.
 #[derive(Clone, Debug)]
-pub struct ChannelDisplaySettings(pub (crate) ChannelDisplaySettingsHandle);
+pub struct ChannelDisplaySettings(pub(crate) ChannelDisplaySettingsHandle);
 
 macro_rules! impl_struct {
   ($($n:ident: $t:ty: $s:ty $(,)?)*) => {

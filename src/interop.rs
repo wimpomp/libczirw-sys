@@ -8,45 +8,45 @@ use std::mem::{ManuallyDrop, MaybeUninit};
 /// This struct contains the version information of the libCZIApi-library. For versioning libCZI, SemVer2 (<https://semver.org/>) is used.
 /// Note that the value of the tweak version number does not have a meaning (as far as SemVer2 is concerned).
 #[derive(Clone, Debug)]
-pub struct LibCZIVersionInfo(pub (crate) LibCZIVersionInfoInterop);
+pub struct LibCZIVersionInfo(pub(crate) LibCZIVersionInfoInterop);
 
 /// This struct gives information about the build of the libCZIApi-library.
 /// Note that all strings must be freed by the caller (using libCZI_Free).
 #[derive(Clone, Debug)]
-pub struct LibCZIBuildInformation(pub (crate) LibCZIBuildInformationInterop);
+pub struct LibCZIBuildInformation(pub(crate) LibCZIBuildInformationInterop);
 
 #[derive(Clone, Debug)]
-pub struct InputStreamClassInfo(pub (crate) InputStreamClassInfoInterop);
+pub struct InputStreamClassInfo(pub(crate) InputStreamClassInfoInterop);
 
 /// This structure gives additional information about an error that occurred in the external stream.
 #[derive(Clone, Debug)]
-pub struct ExternalStreamErrorInfo(pub (crate) ExternalStreamErrorInfoInterop);
+pub struct ExternalStreamErrorInfo(pub(crate) ExternalStreamErrorInfoInterop);
 
 /// This structure contains information about externally provided functions for reading data from an input stream,
 /// and it is used to construct a stream-object to be used with libCZI.
 /// Note on lifetime: The function pointers must remain valid until the function 'close_function' is called. The lifetime
 /// may extend beyond calling the 'libCZI_ReleaseInputStream' function for the corresponding stream-object.
 #[derive(Clone, Debug)]
-pub struct ExternalInputStreamStruct(pub (crate) ExternalInputStreamStructInterop);
+pub struct ExternalInputStreamStruct(pub(crate) ExternalInputStreamStructInterop);
 
 /// This structure contains information about externally provided functions for writing data to an output stream,
 /// and it is used to construct a stream-object to be used with libCZI.
 /// Note on lifetime: The function pointers must remain valid until the function 'close_function' is called. The lifetime
 /// may extend beyond calling the 'libCZI_ReleaseOutputStream' function for the corresponding stream-object.
 #[derive(Clone, Debug)]
-pub struct ExternalOutputStreamStruct(pub (crate) ExternalOutputStreamStructInterop);
+pub struct ExternalOutputStreamStruct(pub(crate) ExternalOutputStreamStructInterop);
 
 /// This structure gather the information needed to create a reader object.
 #[derive(Clone, Debug)]
-pub struct ReaderOpenInfo(pub (crate) ReaderOpenInfoInterop);
+pub struct ReaderOpenInfo(pub(crate) ReaderOpenInfoInterop);
 
 /// This structure describes a rectangle, given by its top-left corner and its width and height.
 #[derive(Clone, Debug)]
-pub struct IntRect(pub (crate) IntRectInterop);
+pub struct IntRect(pub(crate) IntRectInterop);
 
 /// This structure describes a size, given by its width and height.
 #[derive(Clone, Debug)]
-pub struct IntSize(pub (crate) IntSizeInterop);
+pub struct IntSize(pub(crate) IntSizeInterop);
 
 /// This structure gives the bounds for a set of dimensions.
 /// The bit at position `i` in `dimensions_valid` indicates whether the interval for dimension `i+1` is valid. So, bit 0
@@ -56,7 +56,7 @@ pub struct IntSize(pub (crate) IntSizeInterop);
 /// An example would be: `dimensions_valid` = 0b00000011, `start` = { 0, 2 }, `size` = { 5, 6 }. This would mean that the
 /// dimension 'Z' is valid, and the interval is [0, 5], and the dimension 'C' is valid, and the interval is [2, 8].
 #[derive(Clone, Debug)]
-pub struct DimBounds(pub (crate) DimBoundsInterop);
+pub struct DimBounds(pub(crate) DimBoundsInterop);
 
 /// This structure gives the coordinates (of a sub-block) for a set of dimension.
 /// The bit at position `i` in `dimensions_valid` indicates whether the coordinate for dimension `i+1` is valid. So, bit 0
@@ -66,35 +66,35 @@ pub struct DimBounds(pub (crate) DimBoundsInterop);
 /// An example would be: `dimensions_valid` = 0b00000011, `value` = { 0, 2 }. This would mean that the
 /// dimension 'Z' is valid, and the coordinate for 'Z' is 0, and the dimension 'C' is valid, and the coordinate for 'C' is 2.
 #[derive(Clone, Debug)]
-pub struct Coordinate(pub (crate) CoordinateInterop);
+pub struct Coordinate(pub(crate) CoordinateInterop);
 
 /// This structure contains the bounding boxes for a scene.
 #[derive(Clone, Debug)]
-pub struct BoundingBoxes(pub (crate) BoundingBoxesInterop);
+pub struct BoundingBoxes(pub(crate) BoundingBoxesInterop);
 
 /// This structure contains basic statistics about an CZI-document.
 #[derive(Clone, Debug)]
-pub struct SubBlockStatistics(pub (crate) SubBlockStatisticsInterop);
+pub struct SubBlockStatistics(pub(crate) SubBlockStatisticsInterop);
 
 /// This structure extends on the basic statistics about an CZI-document, and includes per-scene statistics.
 #[derive(Debug)]
-pub struct SubBlockStatisticsEx(pub (crate) SubBlockStatisticsInteropEx);
+pub struct SubBlockStatisticsEx(pub(crate) SubBlockStatisticsInteropEx);
 
 #[derive(Clone, Debug)]
-pub struct MetadataAsXml(pub (crate) MetadataAsXmlInterop);
+pub struct MetadataAsXml(pub(crate) MetadataAsXmlInterop);
 
 /// Information about the bitmap represented by a bitmap-object.
 #[derive(Clone, Debug)]
-pub struct BitmapInfo(pub (crate) BitmapInfoInterop);
+pub struct BitmapInfo(pub(crate) BitmapInfoInterop);
 
 /// This structure contains information about a locked bitmap-object, allowing direct
 /// access to the pixel data.
 #[derive(Clone, Debug)]
-pub struct BitmapLockInfo(pub (crate) BitmapLockInfoInterop);
+pub struct BitmapLockInfo(pub(crate) BitmapLockInfoInterop);
 
 /// This structure contains the information about a sub-block.
 #[derive(Clone, Debug)]
-pub struct SubBlockInfo(pub (crate) SubBlockInfoInterop);
+pub struct SubBlockInfo(pub(crate) SubBlockInfoInterop);
 
 /// This structure contains the information about an attachment.
 /// Note that performance reasons we use a fixed-size array for the name. In the rare case that the name is too long to fit into the
@@ -102,35 +102,35 @@ pub struct SubBlockInfo(pub (crate) SubBlockInfoInterop);
 /// In addition, the field 'name_in_case_of_overflow' then contains the full text, allocated with 'libCZI_AllocateString' (and responsibility
 /// for releasing the memory is with the caller).
 #[derive(Clone, Debug)]
-pub struct AttachmentInfo(pub (crate) AttachmentInfoInterop);
+pub struct AttachmentInfo(pub(crate) AttachmentInfoInterop);
 
 /// This structure contains the information about file-header.
 #[derive(Clone, Debug)]
-pub struct FileHeaderInfo(pub (crate) FileHeaderInfoInterop);
+pub struct FileHeaderInfo(pub(crate) FileHeaderInfoInterop);
 
 /// This structure is used to pass the subblock information to libCZIAPI, describing a subblock to be added to a CZI-file.
 #[derive(Clone, Debug)]
-pub struct AddSubBlockInfo(pub (crate) AddSubBlockInfoInterop);
+pub struct AddSubBlockInfo(pub(crate) AddSubBlockInfoInterop);
 
 /// This structure is used to pass the attachment information to libCZIAPI, describing an attachment to be added to a CZI-file.
 #[derive(Clone, Debug)]
-pub struct AddAttachmentInfo(pub (crate) AddAttachmentInfoInterop);
+pub struct AddAttachmentInfo(pub(crate) AddAttachmentInfoInterop);
 
 /// This structure is used to pass the metadata information to libCZIAPI.
 #[derive(Clone, Debug)]
-pub struct WriteMetadataInfo(pub (crate) WriteMetadataInfoInterop);
+pub struct WriteMetadataInfo(pub(crate) WriteMetadataInfoInterop);
 
 /// This structure is used to pass the accessor options to libCZIAPI.
 #[derive(Clone, Debug)]
-pub struct AccessorOptions(pub (crate) AccessorOptionsInterop);
+pub struct AccessorOptions(pub(crate) AccessorOptionsInterop);
 
 /// This structure gathers all information about a channel for the purpose of multi-channel-composition.
 #[derive(Clone, Debug)]
-pub struct CompositionChannelInfo(pub (crate) CompositionChannelInfoInterop);
+pub struct CompositionChannelInfo(pub(crate) CompositionChannelInfoInterop);
 
 /// This structure gathers the information about the scaling.
 #[derive(Clone, Debug)]
-pub struct ScalingInfo(pub (crate) ScalingInfoInterop);
+pub struct ScalingInfo(pub(crate) ScalingInfoInterop);
 
 macro_rules! impl_ptr {
     ($($n:ident: $t:ty: $s:ty $(,)?)*) => {
@@ -488,8 +488,83 @@ impl SubBlockStatistics {
     }
 }
 
+impl SubBlockStatisticsEx {
+    // pub fn new(
+    //     sub_block_count: i32,
+    //     min_m_index: i32,
+    //     max_m_index: i32,
+    //     bounding_box: IntRect,
+    //     bounding_box_layer0: IntRect,
+    //     dim_bounds: DimBounds,
+    //     per_scenes_bounding_boxes: Vec<BoundingBoxes>
+    // ) -> Self {
+    //     Self(SubBlockStatisticsInteropEx {
+    //         sub_block_count,
+    //         min_m_index,
+    //         max_m_index,
+    //         bounding_box: bounding_box.0,
+    //         bounding_box_layer0: bounding_box_layer0.0,
+    //         dim_bounds: dim_bounds.0,
+    //         number_of_per_scenes_bounding_boxes: per_scenes_bounding_boxes.len() as i32,
+    //         per_scenes_bounding_boxes: unsafe { transmute::<Vec<BoundingBoxes>, __IncompleteArrayField<BoundingBoxesInterop>>(per_scenes_bounding_boxes) },
+    //     })
+    // }
+    pub fn get_sub_block_count(&self) -> i32 {
+        self.0.sub_block_count
+    }
+    pub fn get_min_m_index(&self) -> i32 {
+        self.0.min_m_index
+    }
+    pub fn get_max_m_index(&self) -> i32 {
+        self.0.max_m_index
+    }
+    pub fn get_bounding_box(&self) -> IntRect {
+        IntRect(self.0.bounding_box)
+    }
+    pub fn get_bounding_box_layer0(&self) -> IntRect {
+        IntRect(self.0.bounding_box_layer0)
+    }
+    pub fn get_dim_bounds(&self) -> DimBounds {
+        DimBounds(self.0.dim_bounds)
+    }
+    pub fn get_number_of_per_scenes_bounding_boxes(&self) -> i32 {
+        self.0.number_of_per_scenes_bounding_boxes
+    }
+    // pub fn get_per_scenes_bounding_boxes(&self) -> Vec<BoundingBoxes> {
+    //     unsafe { transmute(&self.0.per_scenes_bounding_boxes) }.clone()
+    // }
+    pub fn set_sub_block_count(&mut self, sub_block_count: i32) {
+        self.0.sub_block_count = sub_block_count;
+    }
+    pub fn set_min_m_index(&mut self, min_m_index: i32) {
+        self.0.min_m_index = min_m_index;
+    }
+    pub fn set_max_m_index(&mut self, max_m_index: i32) {
+        self.0.max_m_index = max_m_index;
+    }
+    pub fn set_bounding_box(&mut self, bounding_box: IntRect) {
+        self.0.bounding_box = bounding_box.0
+    }
+    pub fn set_bounding_box_layer0(&mut self, bounding_box_layer0: IntRect) {
+        self.0.bounding_box_layer0 = bounding_box_layer0.0
+    }
+    pub fn set_dim_bounds(&mut self, dim_bounds: DimBounds) {
+        self.0.dim_bounds = dim_bounds.0
+    }
+    pub fn set_number_of_per_scenes_bounding_boxes(
+        &mut self,
+        number_of_per_scenes_bounding_boxes: i32,
+    ) {
+        self.0.number_of_per_scenes_bounding_boxes = number_of_per_scenes_bounding_boxes;
+    }
+    // pub fn set_per_scenes_bounding_boxes(&mut self, per_scenes_bounding_boxes: Vec<BoundingBoxes>) {
+    //     self.0.number_of_per_scenes_bounding_boxes = per_scenes_bounding_boxes.len() as i32;
+    //     self.0.per_scenes_bounding_boxes = unsafe { transmute(per_scenes_bounding_boxes) };
+    // }
+}
+
 impl MetadataAsXml {
-    fn get_data(&self) -> Result<String> {
+    pub fn get_data(&self) -> Result<String> {
         let xml_data = unsafe {
             Vec::from_raw_parts(
                 self.0.data as *mut u8,
@@ -697,12 +772,8 @@ impl AddSubBlockInfo {
         physical_height: i32,
         pixel_type: PixelType,
         compression_mode_raw: i32,
-        size_data: u32,
         data: &[u8],
-        stride: u32,
-        size_metadata: u32,
         metadata: &[u8],
-        size_attachment: u32,
         attachment: &[u8],
     ) -> Self {
         let data = ManuallyDrop::new(data.to_vec());
@@ -721,12 +792,12 @@ impl AddSubBlockInfo {
             physical_height,
             pixel_type: pixel_type.into(),
             compression_mode_raw,
-            size_data,
+            size_data: data.len() as u32,
             data: data.as_ptr() as *const c_void,
-            stride,
-            size_metadata,
+            stride: 1,
+            size_metadata: metadata.len() as u32,
             metadata: metadata.as_ptr() as *const c_void,
-            size_attachment,
+            size_attachment: attachment.len() as u32,
             attachment: attachment.as_ptr() as *const c_void,
         })
     }
@@ -832,24 +903,15 @@ impl AddSubBlockInfo {
     pub fn set_compression_mode_raw(&mut self, compression_mode_raw: i32) {
         self.0.compression_mode_raw = compression_mode_raw
     }
-    pub fn set_size_data(&mut self, size_data: u32) {
-        self.0.size_data = size_data
-    }
     pub fn set_data(&mut self, data: &[u8]) {
         let data = ManuallyDrop::new(data.to_vec());
         self.0.data = data.as_ptr() as *const c_void;
         self.0.size_data = data.len() as u32;
     }
-    pub fn set_size_metadata(&mut self, size_metadata: u32) {
-        self.0.size_metadata = size_metadata
-    }
     pub fn set_metadata(&mut self, metadata: &[u8]) {
         let metadata = ManuallyDrop::new(metadata.to_vec());
         self.0.metadata = metadata.as_ptr() as *const c_void;
         self.0.size_metadata = metadata.len() as u32;
-    }
-    pub fn set_size_attachment(&mut self, size_attachment: u32) {
-        self.0.size_attachment = size_attachment
     }
     pub fn set_attachment(&mut self, attachment: &[u8]) {
         let attachment = ManuallyDrop::new(attachment.to_vec());
@@ -863,7 +925,6 @@ impl AddAttachmentInfo {
         guid: [u8; 16],
         content_file_type: [u8; 8],
         name: [u8; 80],
-        size_attachment_data: u32,
         attachment_data: &[u8],
     ) -> Self {
         let attachment_data = ManuallyDrop::new(attachment_data.to_vec());
@@ -871,7 +932,7 @@ impl AddAttachmentInfo {
             guid,
             contentFileType: content_file_type,
             name,
-            size_attachment_data,
+            size_attachment_data: attachment_data.len() as u32,
             attachment_data: attachment_data.as_ptr() as *const c_void,
         })
     }
@@ -905,9 +966,6 @@ impl AddAttachmentInfo {
     pub fn set_name(&mut self, name: [u8; 80]) {
         self.0.name = name
     }
-    pub fn set_size_attachment_data(&mut self, size_attachment_data: u32) {
-        self.0.size_attachment_data = size_attachment_data
-    }
     pub fn set_attachment_data(&mut self, attachment_data: &[u8]) {
         let attachment_data = ManuallyDrop::new(attachment_data.to_vec());
         self.0.attachment_data = attachment_data.as_ptr() as *const c_void;
@@ -916,10 +974,10 @@ impl AddAttachmentInfo {
 }
 
 impl WriteMetadataInfo {
-    pub fn new(size_metadata: u32, metadata: &[u8]) -> Self {
+    pub fn new(metadata: &[u8]) -> Self {
         let metadata = ManuallyDrop::new(metadata.to_vec());
         Self(WriteMetadataInfoInterop {
-            size_metadata,
+            size_metadata: metadata.len() as u32,
             metadata: metadata.as_ptr() as *const c_void,
         })
     }
@@ -934,9 +992,6 @@ impl WriteMetadataInfo {
                 self.0.metadata as usize,
             )
         }
-    }
-    pub fn set_size_metadata(&mut self, size_metadata: u32) {
-        self.0.size_metadata = size_metadata
     }
     pub fn set_metadata(&mut self, metadata: &[u8]) {
         let metadata = ManuallyDrop::new(metadata.to_vec());
