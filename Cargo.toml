@@ -12,6 +12,7 @@ readme = "README.md"
 keywords = ["czi", "zeiss", "libczi"]
 categories = ["multimedia::images", "science"]
 links = "libCZIAPI"
+exclude = ["test-files/*", "**/*UnitTests"]
 
 [dependencies]
 anyhow = "1.0.98"
