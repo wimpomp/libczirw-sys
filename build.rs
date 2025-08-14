@@ -83,40 +83,40 @@ fn main() -> Result<()> {
         #[cfg(not(feature = "dynamic"))]
         {
             println!(
-                "cargo:rustc-link-search=native={}",
+                "cargo::rustc-link-search=native={}",
                 dst.join("build/Src/libCZIAPI").display()
             );
-            println!("cargo:rustc-link-lib=static=libCZIAPIStatic");
+            println!("cargo::rustc-link-lib=static=libCZIAPIStatic");
 
             println!(
-                "cargo:rustc-link-search=native={}",
+                "cargo::rustc-link-search=native={}",
                 dst.join("build/Src/libCZI").display()
             );
             let profile = env::var("PROFILE")?;
             match profile.as_str() {
-                "debug" => println!("cargo:rustc-link-lib=static=libCZIStaticd"),
-                "release" => println!("cargo:rustc-link-lib=static=libCZIStatic"),
+                "debug" => println!("cargo::rustc-link-lib=static=libCZIStaticd"),
+                "release" => println!("cargo::rustc-link-lib=static=libCZIStatic"),
                 _ => return Err(Error::msg(format!("unsupported profile: {}", profile))),
             }
 
             println!(
-                "cargo:rustc-link-search=native={}",
+                "cargo::rustc-link-search=native={}",
                 dst.join("lib").display()
             );
             println!(
-                "cargo:rustc-link-search=native={}",
+                "cargo::rustc-link-search=native={}",
                 dst.join("lib64").display()
             );
-            println!("cargo:rustc-link-lib=static=zstd");
+            println!("cargo::rustc-link-lib=static=zstd");
         }
 
         #[cfg(feature = "dynamic")]
         {
             println!(
-                "cargo:rustc-link-search=native={}",
+                "cargo::rustc-link-search=native={}",
                 dst.join("build/Src/libCZIAPI").display()
             );
-            println!("cargo:rustc-link-lib=libCZIAPI");
+            println!("cargo::rustc-link-lib=libCZIAPI");
         }
     }
     println!("cargo::rerun-if-changed=build.rs");

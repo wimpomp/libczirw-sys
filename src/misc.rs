@@ -40,25 +40,94 @@ impl fmt::Display for LibCZIApiError {
     }
 }
 
+#[derive(Clone, Debug)]
+pub enum Dimension {
+    /// The Z-dimension.
+    Z = 1,
+    /// The C-dimension ("channel").
+    C = 2,
+    /// The T-dimension ("time").
+    T = 3,
+    /// The R-dimension ("rotation").
+    R = 4,
+    /// The S-dimension ("scene").
+    S = 5,
+    /// The I-dimension ("illumination").
+    I = 6,
+    /// The H-dimension ("phase").
+    H = 7,
+    /// The V-dimension ("view").
+    V = 8,
+    /// The B-dimension ("block") - its use is deprecated.
+    B = 9,
+}
+
+impl Dimension {
+    pub fn vec_from_bitflags(bit_flags: u32) -> Vec<Dimension> {
+        let mut bit_flags = bit_flags;
+        let mut dimensions = Vec::with_capacity(9);
+        for i in 1..=9 {
+            if (bit_flags & 1) > 0 {
+                dimensions.push(Dimension::try_from(i).expect("i must be 0 <= i <= 9"));
+            }
+            bit_flags >>= 1;
+        }
+        dimensions
+    }
+}
+
+impl TryFrom<i32> for Dimension {
+    type Error = Error;
+
+    fn try_from(dimension: i32) -> Result<Self> {
+        match dimension {
+            1 => Ok(Dimension::Z),
+            2 => Ok(Dimension::C),
+            3 => Ok(Dimension::T),
+            4 => Ok(Dimension::R),
+            5 => Ok(Dimension::S),
+            6 => Ok(Dimension::I),
+            7 => Ok(Dimension::H),
+            8 => Ok(Dimension::V),
+            9 => Ok(Dimension::B),
+            _ => Err(anyhow!("Unknown dimension value {}", dimension)),
+        }
+    }
+}
+
 /// enum for SubBlock.get_raw_data
+#[derive(Clone, Debug)]
 pub enum RawDataType {
-    Data,
-    Metadata,
+    Data = 0,
+    Metadata = 1,
+}
+
+impl TryFrom<i32> for RawDataType {
+    type Error = Error;
+
+    fn try_from(raw_data_type: i32) -> Result<Self> {
+        match raw_data_type {
+            0 => Ok(RawDataType::Data),
+            1 => Ok(RawDataType::Metadata),
+            _ => Err(anyhow!("Unknown data type {}", raw_data_type)),
+        }
+    }
 }
 
 /// pixel type
+#[derive(Clone, Debug)]
 pub enum PixelType {
-    Gray8,
-    Gray16,
-    Gray32Float,
-    Bgr24,
-    Bgr48,
-    Bgr96Float,
-    Bgra32,
-    Gray64ComplexFloat,
-    Bgr192ComplexFloat,
-    Gray32,
-    Gray64Float,
+    Gray8 = 0,
+    Gray16 = 1,
+    Gray32Float = 2,
+    Bgr24 = 3,
+    Bgr48 = 4,
+    Bgr96Float = 8,
+    Bgra32 = 9,
+    Gray64ComplexFloat = 10,
+    Bgr192ComplexFloat = 11,
+    Gray32 = 12,
+    Gray64Float = 13,
 }
 
 impl TryFrom<i32> for PixelType {
@@ -78,24 +147,6 @@ impl TryFrom<i32> for PixelType {
             12 => Ok(PixelType::Gray32),
             13 => Ok(PixelType::Gray64Float),
             _ => Err(anyhow!("Unknown pixel type {}", pixel_type)),
-        }
-    }
-}
-
-impl From<PixelType> for i32 {
-    fn from(pixel_type: PixelType) -> Self {
-        match pixel_type {
-            PixelType::Gray8 => 0,
-            PixelType::Gray16 => 1,
-            PixelType::Gray32Float => 2,
-            PixelType::Bgr24 => 3,
-            PixelType::Bgr48 => 4,
-            PixelType::Bgr96Float => 8,
-            PixelType::Bgra32 => 9,
-            PixelType::Gray64ComplexFloat => 10,
-            PixelType::Bgr192ComplexFloat => 11,
-            PixelType::Gray32 => 12,
-            PixelType::Gray64Float => 13,
         }
     }
 }

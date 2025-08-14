@@ -3,6 +3,8 @@ use crate::misc::{PixelType, Ptr};
 use crate::sys::*;
 use anyhow::{Error, Result};
 use std::ffi::{CStr, CString, c_char, c_void};
+use std::fmt::Debug;
+use std::mem;
 use std::mem::{ManuallyDrop, MaybeUninit};
 
 /// This struct contains the version information of the libCZIApi-library. For versioning libCZI, SemVer2 (<https://semver.org/>) is used.
@@ -597,7 +599,7 @@ impl BitmapInfo {
         Self(BitmapInfoInterop {
             width,
             height,
-            pixelType: pixel_type.into(),
+            pixelType: pixel_type as i32,
         })
     }
     pub fn get_width(&self) -> u32 {
@@ -616,19 +618,22 @@ impl BitmapInfo {
         self.0.height = height;
     }
     pub fn set_pixel_type(&mut self, pixel_type: PixelType) {
-        self.0.pixelType = pixel_type.into();
+        self.0.pixelType = pixel_type as i32;
     }
 }
 
 impl BitmapLockInfo {
     pub fn get_data_roi(&self) -> Vec<u8> {
-        unsafe {
+        let vec = unsafe {
             Vec::from_raw_parts(
                 self.0.ptrDataRoi as *mut u8,
                 self.0.size as usize,
                 self.0.size as usize,
             )
-        }
+        };
+        let res = vec.clone();
+        mem::forget(vec);
+        res
     }
 
     pub fn get_stride(&self) -> u32 {
@@ -651,7 +656,7 @@ impl SubBlockInfo {
     ) -> Self {
         Self(SubBlockInfoInterop {
             compression_mode_raw,
-            pixel_type: pixel_type.into(),
+            pixel_type: pixel_type as i32,
             coordinate: coordinate.0,
             logical_rect: logical_rect.0,
             physical_size: physical_size.0,
@@ -680,7 +685,7 @@ impl SubBlockInfo {
         self.0.compression_mode_raw = compression_mode_raw
     }
     pub fn set_pixel_type(&mut self, pixel_type: PixelType) {
-        self.0.pixel_type = pixel_type.into();
+        self.0.pixel_type = pixel_type as i32;
     }
     pub fn set_coordinate(&mut self, coordinate: Coordinate) {
         self.0.coordinate = coordinate.0
@@ -790,7 +795,7 @@ impl AddSubBlockInfo {
             logical_height,
             physical_width,
             physical_height,
-            pixel_type: pixel_type.into(),
+            pixel_type: pixel_type as i32,
             compression_mode_raw,
             size_data: data.len() as u32,
             data: data.as_ptr() as *const c_void,
@@ -898,7 +903,7 @@ impl AddSubBlockInfo {
         self.0.physical_height = physical_height
     }
     pub fn set_pixel_type(&mut self, pixel_type: PixelType) {
-        self.0.pixel_type = pixel_type.into()
+        self.0.pixel_type = pixel_type as i32
     }
     pub fn set_compression_mode_raw(&mut self, compression_mode_raw: i32) {
         self.0.compression_mode_raw = compression_mode_raw

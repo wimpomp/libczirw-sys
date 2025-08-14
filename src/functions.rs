@@ -196,7 +196,10 @@ impl CziReader {
             libCZI_ReaderGetPyramidStatistics(**self, ptr.as_mut_ptr())
         })?;
         let ptr = unsafe { ptr.assume_init() };
-        let statistics = unsafe { CStr::from_ptr(ptr) }.to_str()?.to_owned();
+        assert!(!ptr.is_null());
+        let statistics = unsafe { CStr::from_ptr(ptr) }
+            .to_string_lossy()
+            .into_owned();
         unsafe { libCZI_Free(ptr as *mut c_void) };
         Ok(statistics)
     }
@@ -653,7 +656,7 @@ impl LockedBitmap {
                 ***self,
                 width,
                 height,
-                pixel_type.into(),
+                pixel_type as i32,
                 stride,
                 data.as_mut_ptr() as *mut c_void,
             )
@@ -733,7 +736,10 @@ impl CziDocumentInfo {
             )
         })?;
         let ptr = unsafe { ptr.assume_init() };
-        let info = unsafe { CStr::from_ptr(ptr) }.to_str()?.to_owned();
+        assert!(!ptr.is_null());
+        let info = unsafe { CStr::from_ptr(ptr) }
+            .to_string_lossy()
+            .into_owned();
         unsafe { libCZI_Free(ptr as *mut c_void) };
         Ok(info)
     }
@@ -782,9 +788,10 @@ impl CziDocumentInfo {
             )
         })?;
         let ptr = unsafe { ptr.assume_init() };
-        let info = unsafe { CStr::from_ptr(ptr) }.to_str()?.to_owned();
-        unsafe { libCZI_Free(ptr as *mut c_void) };
-        Ok(info)
+        assert!(!ptr.is_null());
+        Ok(unsafe { CStr::from_ptr(ptr) }
+            .to_string_lossy()
+            .into_owned())
     }
 
     /// Release the specified CZI-document-info object.
